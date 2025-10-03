@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4725102111500350374
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4955800065244875560}
+  - component: {fileID: 8270107869588127465}
+  m_Layer: 0
+  m_Name: Game Initializer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4955800065244875560
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4725102111500350374}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8270107869588127465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4725102111500350374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e250086c56c10f547ac91a4812d3a30a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rows: 2
+  columns: 3
+  gap: 0.5
+  cardPrefab: {fileID: 5854488534750781676, guid: bb177a9e3f6f3cf418ca9556926632df, type: 3}
+  cardManager: {fileID: 1223798227737549527, guid: 353b16a079ca72d49972c27683c49d5d, type: 3}
+  colorGenerator: {fileID: 5105385289961211053, guid: e5526d1e049cad04c9589822415a21a2, type: 3}
+  numberOfValues: 10
+  colors:
+  - {r: 0.2901961, g: 0.5491877, b: 0.7529412, a: 0}
+  - {r: 0.0669994, g: 0.02002491, b: 0.4716981, a: 0}
+  - {r: 0.6415094, g: 0.03933786, b: 0.03933786, a: 0}
+  - {r: 0.9254902, g: 0.9224876, b: 0.85882354, a: 0}
+  - {r: 0.8922869, g: 0.9245283, b: 0.17007834, a: 0}
+  delayBeforeFaceDown: 1
+  victoryManager: {fileID: 8552310898560325361, guid: c3b84c036e7eaca43b4da9406f5f1184, type: 3}
+  victoryScene: VictoryScene
+  delayBeforeLoadScene: 1
