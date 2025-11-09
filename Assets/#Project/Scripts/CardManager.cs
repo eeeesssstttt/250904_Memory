@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -56,6 +55,51 @@ public class CardManager : MonoBehaviour
         }
     }
 
+    public void Reset()
+    {
+        victoryManager.HideVictoryText();
+
+        for (int i = 0; i < deck.Count; i++)
+        {
+            deck[i].ResetColor();
+        }
+
+        int colorIndex;
+
+        // Selecting colors and assigning them to pairs of cards
+
+        int cardIndex;
+        List<int> colorsAlreadyInGame = new();
+        List<CardBehavior> cards = new(deck); // clones deck.
+
+        for (int _ = 0; _ < deck.Count / 2; _++)
+        // _ means we're not using it in the actual loop, just to count through things.
+        {
+            colorIndex = Random.Range(0, colors.Length);
+
+            colorsAlreadyInGame.Add(colorIndex);
+
+            while (colorsAlreadyInGame.Contains(colorIndex))
+            {
+                colorIndex = Random.Range(0, colors.Length);
+            }
+
+            colorsAlreadyInGame.Add(colorIndex);
+
+            cardIndex = Random.Range(0, cards.Count);
+            cards[cardIndex].Initialize(colors[colorIndex], colorIndex, this);
+            cards.RemoveAt(cardIndex);
+
+            cardIndex = Random.Range(0, cards.Count);
+            cards[cardIndex].Initialize(colors[colorIndex], colorIndex, this);
+            cards.RemoveAt(cardIndex);
+
+            // prepping variables to compare cards and log matches
+            memorizedCard = null;
+            matchesFound = 0;
+        }
+    }
+
     public void CardIsClicked(CardBehavior card)
     {
         if (card.IsFaceUp) return;
@@ -70,7 +114,8 @@ public class CardManager : MonoBehaviour
                 matchesFound++;
                 if (matchesFound == deck.Count / 2)
                 {
-                    victoryManager.LaunchVictory();
+                    // victoryManager.LaunchVictoryScene();
+                    victoryManager.DisplayVictoryText();
                 }
             }
             else
@@ -83,6 +128,17 @@ public class CardManager : MonoBehaviour
         else
         {
             memorizedCard = card;
+        }
+    }
+
+    private void Update()
+    {
+        if (victoryManager.Victory)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Reset();
+            }
         }
     }
 }

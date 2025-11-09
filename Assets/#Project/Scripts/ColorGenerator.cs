@@ -1,34 +1,38 @@
 using UnityEngine;
 
 public class ColorGenerator : MonoBehaviour
-// Generates color pool to choose from when assigning card colors.
+// Generates color pool
 {
-    int numberOfValues;
-    float[] values;
-    float[] hues = new float[] { 25, 50, 75 };
+    private int numberOfHues;
+    private float[] hues;
+    private float[] values = new float[] { 0.25f, 0.50f, 0.75f };
+    private Color[] colors;
 
-    public void Initialize(int numberOfValues)
+    public void Initialize(int numberOfHues)
     {
-        this.numberOfValues = numberOfValues;
+        this.numberOfHues = numberOfHues;
+        colors = GeneratePalette();
     }
 
     public Color[] GeneratePalette()
     {
-        Color[] colors = new Color[numberOfValues * hues.Length];
-        values = new float[numberOfValues];
+        Color[] colors = new Color[numberOfHues * values.Length];
+
+        hues = new float[numberOfHues];
+
         int colorIndex = 0;
-        for (int i = 0; i < numberOfValues; i++)
+
+        for (int i = 0; i < numberOfHues; i++)
         {
-            values[i] = i * 1 / (float)numberOfValues;
+            hues[i] = i * 1 / (float)numberOfHues;
         }
+
         for (int j = 0; j < hues.Length; j++)
         {
             for (int k = 0; k < values.Length; k++)
             {
-                colors[colorIndex] = Color.HSVToRGB(hues[j], 1, values[k]);
-                //DOESN'T WORK - Check how to properly create color 
+                colors[colorIndex] = Color.HSVToRGB(hues[j], 1f, values[k]);
                 colorIndex++;
-                Debug.Log(colors[colorIndex]);
             }
         }
         return colors;

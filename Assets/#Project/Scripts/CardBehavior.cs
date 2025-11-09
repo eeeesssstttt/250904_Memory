@@ -8,7 +8,7 @@ public class CardBehavior : MonoBehaviour
     [SerializeField] private float changeColorTime = 1f;
     private Vector3 normalScale;
     private Color color;
-    private Color baseColor = Color.gray;
+    private Color defaultColor = Color.gray;
     public int IndexColor { get; private set; }
     public bool IsFaceUp { get; private set; } = false;
     // can use [SerializeField] to make property accessible in inspector.
@@ -38,13 +38,18 @@ public class CardBehavior : MonoBehaviour
         this.IndexColor = indexColor;
         this.manager = manager;
 
-        ChangeColor(baseColor);
+        ChangeColor(defaultColor);
         IsFaceUp = false;
     }
 
     private void ChangeColor(Color color)
     {
         GetComponent<Renderer>().material.color = color;
+    }
+
+    public void ResetColor()
+    {
+        GetComponent<Renderer>().material.color = defaultColor;
     }
 
     public void FaceUp(float delay = 0f)
@@ -55,7 +60,7 @@ public class CardBehavior : MonoBehaviour
 
     public void FaceDown(float delay = 0f)
     {
-        StartCoroutine(ChangeColorWithLerp(baseColor, delay));
+        StartCoroutine(ChangeColorWithLerp(defaultColor, delay));
         IsFaceUp = false;
     }
 

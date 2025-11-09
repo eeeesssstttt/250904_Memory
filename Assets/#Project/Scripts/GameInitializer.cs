@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using UnityEditor.SearchService;
+using TMPro;
 using UnityEngine;
 
 public class GameInitializer : MonoBehaviour
@@ -16,7 +16,7 @@ public class GameInitializer : MonoBehaviour
     private List<CardBehavior> deck = new();
     [SerializeField] private CardManager cardManager;
     [SerializeField] private ColorGenerator colorGenerator;
-    [SerializeField] private int numberOfValues = 10;
+    [SerializeField] private int numberOfHues = 10;
     [SerializeField] private Color[] colors;
     [SerializeField] private float delayBeforeFaceDown = 1f;
 
@@ -25,7 +25,9 @@ public class GameInitializer : MonoBehaviour
 
     [SerializeField] private VictoryManager victoryManager;
     [SerializeField] private string victoryScene;
-    [SerializeField] private float delayBeforeLoadScene = 1f;
+    [SerializeField] private Canvas victoryTextDisplay;
+    [SerializeField] private string victoryText;
+    [SerializeField] private float delayBeforeVictory = 1f;
 
     private void Start()
     {
@@ -35,13 +37,15 @@ public class GameInitializer : MonoBehaviour
             return; //Start does not continue since there's an odd number of cards.
         }
 
-        if (colors.Length < rows * columns / 2)
-        {
-            Debug.LogError("There must be enough colors to fill all cards.");
-            return;
-        }
+        // if (colors.Length < rows * columns / 2)
+        // {
+        //     Debug.LogError("There must be enough colors to fill all cards.");
+        //     return;
+        // }
+
         ObjectCreation();
         ObjectInitialization();
+        Destroy(gameObject);
     }
 
     // We could have a separate object verification method.
@@ -75,14 +79,16 @@ public class GameInitializer : MonoBehaviour
         }
         cardManager = Instantiate(cardManager);
         victoryManager = Instantiate(victoryManager);
+        victoryTextDisplay = Instantiate(victoryTextDisplay);
+        victoryTextDisplay.gameObject.SetActive(false);
         colorGenerator = Instantiate(colorGenerator);
     }
 
     private void ObjectInitialization()
     {
-        colorGenerator.Initialize(numberOfValues);
+        colorGenerator.Initialize(numberOfHues);
         this.colors = colorGenerator.GeneratePalette();
         cardManager.Initialize(deck, colors, delayBeforeFaceDown, victoryManager);
-        victoryManager.Initialize(victoryScene, delayBeforeLoadScene);
+        victoryManager.Initialize(victoryScene, victoryTextDisplay, victoryText, delayBeforeVictory);
     }
 }
